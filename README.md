@@ -60,3 +60,30 @@ import com.fasterxml.jackson.databind.*;
 ~/jsh $ mvn package
 ~/jsh $ mvn jshell:run -Djshell.scripts="startup.jsh"
 ```
+
+
+## example
+
+```bash
+
+jshell> public record Group(String description, String displayName, Boolean mailEnabled, String mailNickname, Boolean securityEnabled) implements Serializable { }
+|  created record Group
+jshell> import com.fasterxml.jackson.databind.*;
+jshell> var om = new ObjectMapper();
+om ==> com.fasterxml.jackson.databind.ObjectMapper@1a968a59
+jshell> Group g = new Group("desc", "name", true, "nick", false)
+g ==> Group[description=desc, displayName=name, mailEna ... ck, securityEnabled=false]
+jshell> g
+g ==> Group[description=desc, displayName=name, mailEnabled=true, mailNickname=nick, securityEnabled=false]
+jshell> g
+g ==> Group[description=desc, displayName=name, mailEnabled=true, mailNickname=nick, securityEnabled=false]
+jshell> om.write
+writeTree(                         writeValue(                        writeValueAsBytes(                 writeValueAsString(                writer(                            writerFor(                         writerWithDefaultPrettyPrinter()
+writerWithType(                    writerWithView(
+jshell> om.writeValueAs
+writeValueAsBytes(    writeValueAsString(
+jshell> om.writeValueAsString(g)
+$7 ==> "{\"description\":\"desc\",\"displayName\":\"name\",\"mailEnabled\":true,\"mailNickname\":\"nick\",\"securityEnabled\":false}"
+
+jshell>
+```
